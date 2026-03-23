@@ -62,7 +62,7 @@ func main() {
 
 // runNonStreaming sends a single prompt to the LLM and prints the full response at once.
 func runNonStreaming(c *client.Client, prompt string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 	defer cancel()
 
 	req := client.ChatRequest{
@@ -83,7 +83,7 @@ func runNonStreaming(c *client.Client, prompt string) {
 
 // runStreaming sends a prompt to the LLM and prints tokens to the terminal as they arrive.
 func runStreaming(c *client.Client, prompt string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 	defer cancel()
 
 	req := client.ChatStreamRequest{

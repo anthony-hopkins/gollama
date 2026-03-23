@@ -8,9 +8,9 @@ import (
 	"errors"        // Used for error handling and comparisons.
 	"fmt"           // Used for formatted I/O and creating error messages.
 	"io"            // Used for basic I/O primitives.
-	"net"           // Used for network-related settings like dialers.
-	"net/http"      // The core package for making HTTP requests.
-	"time"          // Used for defining durations and timeouts.
+	"net"
+	"net/http" // The core package for making HTTP requests.
+	"time"
 )
 
 //
@@ -32,23 +32,20 @@ func New(baseURL string) *Client {
 	return &Client{
 		BaseURL: baseURL,
 		HTTP: &http.Client{
-			// Timeout is the total time allowed for a single request.
-			// 60 seconds is usually enough for a standard LLM response.
-			Timeout: 60 * time.Second,
+			Timeout: 0, // <-- IMPORTANT: disable global timeout for streaming
 
-			// Transport defines how the underlying network connections are handled.
 			Transport: &http.Transport{
 				DialContext: (&net.Dialer{
-					// How long to wait for the initial TCP connection.
-					Timeout: 5 * time.Second,
-					// Keep-alive helps reuse connections, improving performance.
+					Timeout:   5 * time.Second,
 					KeepAlive: 30 * time.Second,
 				}).DialContext,
 
-				// Connection pooling: these settings allow the client to reuse
-				// existing connections instead of opening new ones every time.
 				MaxIdleConns:        100,
 				MaxIdleConnsPerHost: 10,
+
+				// Optional but recommended for long streams:
+				ResponseHeaderTimeout: 0,
+				IdleConnTimeout:       0,
 			},
 		},
 	}
