@@ -34,13 +34,13 @@ The CLI application requires a `baseURL` and a `prompt`. It supports two modes: 
 ### Non-streaming Mode (Default)
 
 ```bash
-./gollama --baseURL http://localhost:11434/v1 --prompt "What is the capital of France?" --mode nonstream
+./gollama --baseURL http://localhost:11434 --prompt "What is the capital of France?" --mode nonstream
 ```
 
 ### Streaming Mode
 
 ```bash
-./gollama --baseURL http://localhost:11434/v1 --prompt "Write a short poem about Go programming." --mode stream
+./gollama --baseURL http://localhost:11434 --prompt "Write a short poem about Go programming." --mode stream
 ```
 
 ### Flags
